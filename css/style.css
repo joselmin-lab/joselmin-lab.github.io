@@ -62,6 +62,12 @@ nav a:hover {
     color: var(--primary-color);
 }
 
+/* FIX: al usar header fijo, los anclajes (#inicio/#nosotros/#productos)
+   quedan tapados. Esto agrega un margen superior automático al hacer scroll. */
+section[id] {
+    scroll-margin-top: 110px; /* altura aproximada del header en desktop */
+}
+
 /* Sección Hero (Inicio con fondo oscuro) */
 .hero {
     position: relative;
@@ -274,6 +280,11 @@ footer p { margin: 5px 0; }
 
 /* --- Responsive (MÓVIL) --- */
 @media (max-width: 768px) {
+    /* En móvil el header es más alto, ajustamos el scroll-margin-top */
+    section[id] {
+        scroll-margin-top: 190px;
+    }
+
     /* HEADER: logo arriba, menú abajo, centrado */
     header {
         flex-direction: column;
