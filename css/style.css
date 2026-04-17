@@ -272,36 +272,45 @@ footer p { margin: 5px 0; }
     100% { transform: translateY(0); }
 }
 
-/* --- Responsive --- */
+/* --- Responsive (MÓVIL) --- */
 @media (max-width: 768px) {
-    /* Header más usable en móvil */
+    /* HEADER: logo arriba, menú abajo, centrado */
     header {
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 5%;
         gap: 10px;
+    }
+
+    .logo img {
+        height: 52px;
     }
 
     nav {
         width: 100%;
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         flex-wrap: wrap;
-        gap: 14px;
+        gap: 14px 18px;
+        padding-bottom: 6px;
     }
 
     nav a {
-        margin-left: 0; /* usamos gap */
+        margin-left: 0;
         font-size: 0.85rem;
+        line-height: 1.1;
+        white-space: nowrap;
     }
 
-    .hero h1 {
-        font-size: 2.2rem;
+    /* HERO: compensa header más alto en móvil */
+    .hero-content {
+        margin-top: 130px;
     }
 
-    .hero p {
-        font-size: 1rem;
-    }
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 1rem; }
 
-    /* Boletín: centrado abajo correctamente */
+    /* Boletín: centrado abajo */
     .boletin-flotante {
         top: auto;
         bottom: 30px;
@@ -309,7 +318,7 @@ footer p { margin: 5px 0; }
         right: auto;
         transform: translateX(-50%);
         animation: none;
-        max-width: 300px;
+        max-width: 320px;
         width: calc(100% - 40px);
     }
 }
