@@ -5,18 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto | AMS Shocks</title>
     <link rel="stylesheet" href="css/style.css">
+
     <style>
         body { background-color: #f5f5f5; }
+
+        /* Encabezado de la página de contacto */
         .hero-contacto {
-            padding-top: 120px;
+            padding-top: 160px; /* más espacio para que no lo tape el header fijo */
             padding-bottom: 60px;
             text-align: center;
             background-color: var(--black-bg);
             color: var(--white-bg);
             border-bottom: 3px solid var(--primary-color);
         }
-        .hero-contacto h1 { color: var(--primary-color); text-transform: uppercase; margin-bottom: 10px; }
-        
+
+        .hero-contacto h1 {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
         /* Contenedor Grid para los dos formularios */
         .formularios-wrapper {
             display: grid;
@@ -26,7 +34,7 @@
             margin: 0 auto;
             padding: 60px 5%;
         }
-        
+
         .form-box {
             background: var(--white-bg);
             padding: 40px;
@@ -34,7 +42,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border-top: 5px solid var(--primary-color);
         }
-        
+
         .form-box h2 {
             color: var(--black-bg);
             margin-bottom: 25px;
@@ -50,11 +58,17 @@
         }
 
         @media (max-width: 768px) {
+            /* En móvil el header es más alto (logo arriba + menú abajo) */
+            .hero-contacto {
+                padding-top: 200px;
+            }
+
             .formularios-wrapper { grid-template-columns: 1fr; }
             .row-3 { grid-template-columns: 1fr; gap: 20px; }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Menú de Navegación -->
@@ -78,7 +92,7 @@
 
     <!-- Sección de Formularios -->
     <div class="formularios-wrapper">
-        
+
         <!-- FORMULARIO 1: Solicitud de Cotización -->
         <div class="form-box">
             <h2>Solicitud de Cotización</h2>
@@ -87,21 +101,21 @@
                 <input type="hidden" name="_subject" value="NUEVA COTIZACIÓN desde la Web">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_next" value="https://amsshocks.com/index.html">
-                
+
                 <!-- Datos de Contacto -->
                 <input type="text" name="Nombre" placeholder="Nombre completo" required>
                 <input type="tel" name="Telefono" placeholder="Teléfono" required>
                 <input type="email" name="Correo" placeholder="Correo electrónico" required>
-                
-                <!-- Datos del Vehículo (en una línea de 3 si hay espacio) -->
+
+                <!-- Datos del Vehículo -->
                 <div class="row-3">
                     <input type="text" name="Marca_Vehiculo" placeholder="Marca (Ej: Toyota)" required>
                     <input type="text" name="Modelo_Vehiculo" placeholder="Modelo (Ej: Tacoma)" required>
                     <input type="number" name="Año_Vehiculo" placeholder="Año" required>
                 </div>
-                
+
                 <textarea name="Mensaje" placeholder="Detalles de la suspensión (Uso en competencia, calle, requerimientos específicos...)" required></textarea>
-                
+
                 <button type="submit">Enviar Cotización</button>
             </form>
         </div>
@@ -114,24 +128,11 @@
                 <input type="hidden" name="_subject" value="NUEVO CONTACTO COMERCIAL desde la Web">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_next" value="https://amsshocks.com/index.html">
-                
+
                 <input type="text" name="Nombre" placeholder="Nombre de la empresa o distribuidor" required>
                 <input type="tel" name="Telefono" placeholder="Teléfono de contacto" required>
                 <input type="email" name="Correo" placeholder="Correo electrónico corporativo" required>
-                
+
                 <textarea name="Mensaje" placeholder="¿En qué podemos ayudarte? (Distribución, alianzas, consultas generales)" required></textarea>
-                
-                <button type="submit">Enviar Mensaje Comercial</button>
-            </form>
-        </div>
 
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 AMS Shocks. Todos los derechos reservados.</p>
-        <p>ventas@amsshocks.com</p>
-    </footer>
-
-</body>
-</html>
+                <button type="submit">Enviar*
