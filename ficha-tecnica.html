@@ -58,9 +58,15 @@
             max-height: 600px; /* Limita la altura para que mantengan formato vertical */
             object-fit: contain;
             border-radius: 8px;
-            background-color: #000;
+            background-color: #ffffff; /* Fondo blanco pedido por el usuario */
             border: 1px solid #333;
             padding: 10px;
+            /* Marca de agua centrada */
+            background-image: url('img/logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60%;
+            /* El PNG transparente de tu producto se montará sobre esta marca de agua */
         }
 
         /* Caja de especificaciones */
@@ -191,7 +197,37 @@
                     const img = document.createElement('img');
                     img.src = imgSrc;
                     img.alt = `Plano y medidas - ${producto.nombre}`;
-                    galeria.appendChild(img);
+                    // Un pequeño truco para que la marca de agua quede opaca pero el amortiguador nítido
+                    // Forzamos el logo como marca de agua en un div contenedor en vez de la etiqueta img misma.
+                    const wrapper = document.createElement('div');
+                    wrapper.style.position = 'relative';
+                    wrapper.style.backgroundColor = '#ffffff';
+                    wrapper.style.borderRadius = '8px';
+                    wrapper.style.border = '1px solid #333';
+                    wrapper.style.display = 'flex';
+                    wrapper.style.justifyContent = 'center';
+                    wrapper.style.alignItems = 'center';
+                    wrapper.style.overflow = 'hidden';
+                    wrapper.style.padding = '10px';
+
+                    // La marca de agua (logo) en el fondo del contenedor
+                    const watermark = document.createElement('img');
+                    watermark.src = 'img/logo.png';
+                    watermark.style.position = 'absolute';
+                    watermark.style.width = '60%';
+                    watermark.style.opacity = '0.15'; // 15% de visibilidad
+                    watermark.style.zIndex = '1';
+                    watermark.style.pointerEvents = 'none';
+
+                    // La imagen real del amortiguador (por encima)
+                    img.style.position = 'relative';
+                    img.style.zIndex = '2';
+                    img.style.backgroundColor = 'transparent';
+                    img.style.border = 'none'; // Quitamos borde a la img porque ya lo tiene el wrapper
+
+                    wrapper.appendChild(watermark);
+                    wrapper.appendChild(img);
+                    galeria.appendChild(wrapper);
                 });
 
                 // Llenar lista de especificaciones
