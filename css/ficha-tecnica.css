@@ -374,7 +374,7 @@ body {
 .galeria-main-img {
     display: block;
     max-width: 100%;
-    max-height: 580px;
+    max-height: 580px; /* generous cap so tall portrait drawings don't overflow the section */
     width: auto;
     height: auto;
     object-fit: contain;

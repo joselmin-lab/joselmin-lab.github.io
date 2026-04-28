@@ -87,6 +87,7 @@
             // ── Galería ─────────────────────────────────────────
             var galeria = document.getElementById('galeria-producto');
             var currentMainIndex = 0;
+            var activeThumbEl = null;   // tracks the currently-active thumbnail element
 
             // Build layout containers
             var thumbsCol = document.createElement('div');
@@ -135,6 +136,13 @@
                 }, 180);
             }
 
+            // Helper: set a new active thumbnail element
+            function setActiveThumb(el) {
+                if (activeThumbEl) { activeThumbEl.classList.remove('active'); }
+                el.classList.add('active');
+                activeThumbEl = el;
+            }
+
             // Build thumbnails
             producto.imagenes.forEach(function (imgSrc, idx) {
                 var thumb = document.createElement('div');
@@ -151,6 +159,9 @@
                 thumb.appendChild(thumbImg);
                 thumbsCol.appendChild(thumb);
 
+                // Set initial active reference
+                if (idx === 0) { activeThumbEl = thumb; }
+
                 // Register in lightbox images array
                 lbImages.push({ src: imgSrc, alt: 'Plano y medidas - ' + producto.nombre });
 
@@ -163,10 +174,7 @@
                 thumb.addEventListener('click', (function (s, i, t) {
                     return function () {
                         changeMainImage(s, i);
-                        thumbsCol.querySelectorAll('.galeria-thumb').forEach(function (el) {
-                            el.classList.remove('active');
-                        });
-                        t.classList.add('active');
+                        setActiveThumb(t);
                     };
                 }(imgSrc, idx, thumb)));
 
@@ -176,10 +184,7 @@
                         if (e.key === ' ') { e.preventDefault(); }
                         if (e.key === 'Enter' || e.key === ' ') {
                             changeMainImage(s, i);
-                            thumbsCol.querySelectorAll('.galeria-thumb').forEach(function (el) {
-                                el.classList.remove('active');
-                            });
-                            t.classList.add('active');
+                            setActiveThumb(t);
                         }
                     };
                 }(imgSrc, idx, thumb)));
