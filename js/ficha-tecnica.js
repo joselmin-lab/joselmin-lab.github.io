@@ -86,65 +86,107 @@
 
             // ── Galería ─────────────────────────────────────────
             var galeria = document.getElementById('galeria-producto');
+            var currentMainIndex = 0;
 
+            // Build layout containers
+            var thumbsCol = document.createElement('div');
+            thumbsCol.className = 'galeria-thumbs';
+
+            var mainWrap = document.createElement('div');
+            mainWrap.className = 'galeria-main-wrap';
+
+            // Main image element
+            var mainImg = document.createElement('img');
+            mainImg.className = 'galeria-main-img';
+            mainImg.alt = 'Plano y medidas - ' + producto.nombre;
+            if (producto.imagenes.length > 0) {
+                mainImg.src = producto.imagenes[0];
+            }
+
+            // Magnifier icon (top-right corner, indicates click-to-zoom)
+            var zoomIcon = document.createElement('div');
+            zoomIcon.className = 'galeria-zoom-icon';
+            zoomIcon.setAttribute('aria-hidden', 'true');
+            zoomIcon.innerHTML =
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" ' +
+                'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ' +
+                'width="16" height="16">' +
+                '<circle cx="11" cy="11" r="8"/>' +
+                '<line x1="21" y1="21" x2="16.65" y2="16.65"/>' +
+                '<line x1="11" y1="8"  x2="11"    y2="14"/>' +
+                '<line x1="8"  y1="11" x2="14"    y2="11"/>' +
+                '</svg>';
+
+            mainWrap.appendChild(mainImg);
+            mainWrap.appendChild(zoomIcon);
+
+            // Click on main image → open lightbox at currently shown image
+            mainWrap.addEventListener('click', function () {
+                openLightbox(currentMainIndex);
+            });
+
+            // Helper: fade-transition to a new main image
+            function changeMainImage(src, idx) {
+                currentMainIndex = idx;
+                mainImg.style.opacity = '0';
+                setTimeout(function () {
+                    mainImg.src = src;
+                    mainImg.style.opacity = '1';
+                }, 180);
+            }
+
+            // Build thumbnails
             producto.imagenes.forEach(function (imgSrc, idx) {
-                // Outer clickable wrapper
-                var wrapper = document.createElement('div');
-                wrapper.className = 'galeria-thumb';
-                wrapper.setAttribute('tabindex', '0');
-                wrapper.setAttribute('role', 'button');
-                wrapper.setAttribute('aria-label', 'Ver imagen ' + (idx + 1) + ' en pantalla completa');
+                var thumb = document.createElement('div');
+                thumb.className = 'galeria-thumb' + (idx === 0 ? ' active' : '');
+                thumb.setAttribute('tabindex', '0');
+                thumb.setAttribute('role', 'button');
+                thumb.setAttribute('aria-label', 'Seleccionar imagen ' + (idx + 1));
 
-                // Watermark
-                var watermark = document.createElement('img');
-                watermark.src       = 'img/logo.png';
-                watermark.className = 'galeria-watermark';
-                watermark.alt       = '';
-                watermark.setAttribute('aria-hidden', 'true');
+                var thumbImg = document.createElement('img');
+                thumbImg.src = imgSrc;
+                thumbImg.alt = 'Miniatura ' + (idx + 1) + ' - ' + producto.nombre;
+                thumbImg.className = 'galeria-thumb-img';
 
-                // Product image
-                var img = document.createElement('img');
-                img.src       = imgSrc;
-                img.alt       = 'Plano y medidas - ' + producto.nombre;
-                img.className = 'galeria-img';
-
-                // Magnifier overlay (SVG inline — no external dependency)
-                var overlay = document.createElement('div');
-                overlay.className = 'galeria-overlay';
-                overlay.setAttribute('aria-hidden', 'true');
-                overlay.innerHTML =
-                    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" ' +
-                    'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-                    '<circle cx="11" cy="11" r="8"/>' +
-                    '<line x1="21" y1="21" x2="16.65" y2="16.65"/>' +
-                    '<line x1="11" y1="8"  x2="11"    y2="14"/>' +
-                    '<line x1="8"  y1="11" x2="14"    y2="11"/>' +
-                    '</svg>';
-
-                wrapper.appendChild(watermark);
-                wrapper.appendChild(img);
-                wrapper.appendChild(overlay);
-                galeria.appendChild(wrapper);
+                thumb.appendChild(thumbImg);
+                thumbsCol.appendChild(thumb);
 
                 // Register in lightbox images array
-                lbImages.push({ src: imgSrc, alt: img.alt });
+                lbImages.push({ src: imgSrc, alt: 'Plano y medidas - ' + producto.nombre });
 
-                // Click → open lightbox
-                wrapper.addEventListener('click', (function (i) {
-                    return function () { openLightbox(i); };
-                }(idx)));
+                // Hover → preview main image (active border stays on last clicked)
+                thumb.addEventListener('mouseenter', (function (s, i) {
+                    return function () { changeMainImage(s, i); };
+                }(imgSrc, idx)));
 
-                // Enter / Space → open lightbox (keyboard accessibility)
-                wrapper.addEventListener('keydown', (function (i) {
+                // Click → select as active + change main image
+                thumb.addEventListener('click', (function (s, i, t) {
+                    return function () {
+                        changeMainImage(s, i);
+                        thumbsCol.querySelectorAll('.galeria-thumb').forEach(function (el) {
+                            el.classList.remove('active');
+                        });
+                        t.classList.add('active');
+                    };
+                }(imgSrc, idx, thumb)));
+
+                // Keyboard: Enter / Space → select
+                thumb.addEventListener('keydown', (function (s, i, t) {
                     return function (e) {
-                        // Always prevent Space from scrolling the page on focusable wrappers
                         if (e.key === ' ') { e.preventDefault(); }
                         if (e.key === 'Enter' || e.key === ' ') {
-                            openLightbox(i);
+                            changeMainImage(s, i);
+                            thumbsCol.querySelectorAll('.galeria-thumb').forEach(function (el) {
+                                el.classList.remove('active');
+                            });
+                            t.classList.add('active');
                         }
                     };
-                }(idx)));
+                }(imgSrc, idx, thumb)));
             });
+
+            galeria.appendChild(thumbsCol);
+            galeria.appendChild(mainWrap);
 
             // ── Especificaciones ──────────────────────────────
             var lista = document.getElementById('lista-especificaciones');

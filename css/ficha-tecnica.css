@@ -292,34 +292,52 @@ body {
     background: linear-gradient(90deg, var(--primary-color) 0%, transparent 100%);
 }
 
-.galeria-imagenes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 22px;
-    max-width: 1200px;
+/* ── Galería estilo eBay: thumbnails + imagen principal ─── */
+.galeria-ebay {
+    display: flex;
+    gap: 16px;
+    max-width: 1100px;
     margin: 0 auto;
+    align-items: flex-start;
     animation: fade-in-up 0.7s 0.15s ease both;
 }
 
-/* Thumbnail wrapper */
+/* Vertical thumbnail strip */
+.galeria-thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100px;
+    flex-shrink: 0;
+}
+
+/* Individual thumbnail */
 .galeria-thumb {
-    position: relative;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 2px solid #282828;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-    aspect-ratio: 3 / 4;
+    opacity: 0.6;
+    transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .galeria-thumb:hover {
+    opacity: 1;
+    border-color: #bbb;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.galeria-thumb.active {
     border-color: var(--primary-color);
-    box-shadow: 0 14px 44px rgba(255, 102, 0, 0.22);
-    transform: translateY(-5px);
+    border-width: 3px;
+    opacity: 1;
+    box-shadow: 0 2px 12px rgba(255, 102, 0, 0.22);
 }
 
 .galeria-thumb:focus-visible {
@@ -327,63 +345,65 @@ body {
     outline-offset: 3px;
 }
 
-/* Watermark */
-.galeria-watermark {
-    position: absolute;
-    width: 60%;
-    opacity: 0.12;
-    z-index: 1;
-    pointer-events: none;
-    user-select: none;
-}
-
-/* Product image */
-.galeria-img {
-    position: relative;
-    z-index: 2;
+.galeria-thumb-img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 14px;
-    transition: transform 0.4s ease;
-    background: transparent;
-    border: none;
+    padding: 6px;
 }
 
-.galeria-thumb:hover .galeria-img {
-    transform: scale(1.05);
-}
-
-/* Hover overlay with magnifier */
-.galeria-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    background: rgba(0, 0, 0, 0);
+/* Main image area */
+.galeria-main-wrap {
+    flex: 1;
+    position: relative;
+    background: #fff;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    box-shadow:
+        0 2px 16px rgba(0, 0, 0, 0.07),
+        0 1px 3px rgba(0, 0, 0, 0.05);
+    cursor: zoom-in;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s;
+    min-height: 420px;
+}
+
+.galeria-main-img {
+    display: block;
+    max-width: 100%;
+    max-height: 580px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    padding: 24px;
+    transition: opacity 0.18s ease;
+}
+
+/* Magnifier icon — top-right of main image */
+.galeria-zoom-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
     pointer-events: none;
+    z-index: 2;
+    transition: opacity 0.2s;
 }
 
-.galeria-overlay svg {
-    width: 54px;
-    height: 54px;
-    color: #fff;
+.galeria-main-wrap:hover .galeria-zoom-icon {
     opacity: 0;
-    transform: scale(0.65);
-    transition: opacity 0.3s, transform 0.3s;
-    filter: drop-shadow(0 2px 10px rgba(0,0,0,0.9));
-}
-
-.galeria-thumb:hover .galeria-overlay {
-    background: rgba(0, 0, 0, 0.42);
-}
-
-.galeria-thumb:hover .galeria-overlay svg {
-    opacity: 1;
-    transform: scale(1);
 }
 
 /* ── Lightbox ─────────────────────────────────────────────── */
@@ -666,7 +686,25 @@ body {
     .sello-icono { font-size: 3.2rem; }
 
     .galeria-section { padding: 52px 5%; }
-    .galeria-imagenes { grid-template-columns: 1fr 1fr; }
+    .galeria-ebay { flex-direction: column; }
+    .galeria-thumbs {
+        width: 100%;
+        flex-direction: row;
+        gap: 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+        order: 2;
+    }
+    .galeria-thumb {
+        width: 72px;
+        flex-shrink: 0;
+    }
+    .galeria-main-wrap {
+        width: 100%;
+        min-height: 300px;
+        order: 1;
+    }
 
     .specs-section { padding: 52px 5%; }
     .specs-card { padding: 32px 22px; }
@@ -676,7 +714,8 @@ body {
 }
 
 @media (max-width: 480px) {
-    .galeria-imagenes { grid-template-columns: 1fr; }
+    .galeria-main-wrap { min-height: 260px; }
+    .galeria-main-img  { max-height: 360px; }
 
     .lightbox-prev,
     .lightbox-next {
