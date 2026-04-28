@@ -8,121 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Estilos específicos para la ficha técnica */
-        .ficha-section {
-            padding: 120px 20px 60px; /* Espacio para el header fijo */
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .volver-btn {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: #ff6600;
-            text-decoration: none;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        .volver-btn:hover {
-            color: #fff;
-        }
-        
-        .producto-titulo {
-            color: #fff;
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.5rem;
-            margin-top: 0;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        .producto-categoria {
-            color: #ff6600;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            display: block;
-        }
-
-        /* Galería de imágenes verticales */
-        .galeria-imagenes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 50px;
-        }
-        .galeria-imagenes img {
-            width: 100%;
-            height: auto;
-            max-height: 600px; /* Limita la altura para que mantengan formato vertical */
-            object-fit: contain;
-            border-radius: 8px;
-            background-color: #ffffff; /* Fondo blanco pedido por el usuario */
-            border: 1px solid #333;
-            padding: 10px;
-            /* Marca de agua centrada */
-            background-image: url('img/logo.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 60%;
-            /* El PNG transparente de tu producto se montará sobre esta marca de agua */
-        }
-
-        /* Caja de especificaciones */
-        .ficha-detalles {
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .ficha-detalles h2 {
-            color: #ff6600;
-            font-family: 'Oswald', sans-serif;
-            margin-top: 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-            font-size: 2rem;
-            text-transform: uppercase;
-        }
-        
-        /* Lista a dos columnas con checks */
-        .lista-caracteristicas {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .lista-caracteristicas li {
-            position: relative;
-            padding-left: 35px;
-            color: #e0e0e0;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-        }
-        .lista-caracteristicas li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #ff6600;
-            font-weight: bold;
-            font-size: 1.4rem;
-        }
-
-        /* Mensaje de error */
-        #error-mensaje {
-            display: none;
-            text-align: center;
-            padding: 50px;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="css/ficha-tecnica.css">
 </head>
 <body>
 
@@ -140,34 +26,87 @@
     </header>
 
     <!-- Contenido de la Ficha Técnica -->
-    <section class="ficha-section">
-        <!-- Botón Volver -->
-        <a href="index.html#productos" class="volver-btn">← Volver a Productos</a>
-        
-        <div id="contenido-ficha">
-            <h1 id="titulo-producto" class="producto-titulo"></h1>
-            <span id="categoria-producto" class="producto-categoria"></span>
+    <div class="ficha-page">
 
-            <!-- Imágenes con Medidas (Verticales) -->
+        <!-- Hero del producto -->
+        <div class="producto-hero">
+            <a href="index.html#productos" class="volver-btn">← Volver a Productos</a>
+            <div class="producto-hero-content" id="contenido-ficha">
+                <h1 id="titulo-producto" class="producto-titulo"></h1>
+                <span id="categoria-producto" class="producto-categoria"></span>
+            </div>
+        </div>
+
+        <!-- Sellos distintivos -->
+        <section class="sellos-section" id="sellos-section">
+            <p class="sellos-section-title">// DISTINTIVOS DEL PRODUCTO</p>
+            <div class="sellos-grid">
+                <div class="sello sello-bolivia">
+                    <span class="sello-icono">🇧🇴</span>
+                    <strong class="sello-titulo">Hecho en Bolivia</strong>
+                    <span class="sello-sub">Fabricación nacional premium</span>
+                </div>
+                <div class="sello sello-reparable">
+                    <span class="sello-icono">🔧</span>
+                    <strong class="sello-titulo">100% Reparable</strong>
+                    <span class="sello-sub">Diseñado para mantenimiento</span>
+                </div>
+                <div class="sello sello-garantia">
+                    <span class="sello-icono">🛡️</span>
+                    <strong class="sello-titulo">6 Meses de Garantía</strong>
+                    <span class="sello-sub">Respaldo total del fabricante</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galería de imágenes -->
+        <section class="galeria-section" id="galeria-section">
+            <div class="section-label">
+                <h2>Galería del Producto</h2>
+            </div>
             <div id="galeria-producto" class="galeria-imagenes">
                 <!-- Las imágenes se inyectan por JS -->
             </div>
+        </section>
 
-            <!-- Datos Técnicos -->
-            <div class="ficha-detalles">
+        <!-- Especificaciones técnicas -->
+        <section class="specs-section" id="specs-section">
+            <div class="section-label">
                 <h2>Especificaciones Técnicas</h2>
+            </div>
+            <div class="specs-card">
                 <ul id="lista-especificaciones" class="lista-caracteristicas">
                     <!-- Las especificaciones se inyectan por JS -->
                 </ul>
             </div>
-        </div>
+        </section>
 
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2>¿Interesado en este producto?</h2>
+            <p>Contáctanos para cotizar o consultar disponibilidad. Enviamos a todo el país.</p>
+            <a href="contacto.html" class="btn">Contactar Ahora</a>
+        </section>
+
+        <!-- Mensaje de error -->
         <div id="error-mensaje">
             <h2>Producto no encontrado</h2>
             <p>Lo sentimos, no hemos podido cargar la información de este amortiguador.</p>
             <a href="index.html#productos" class="btn btn-aviso" style="margin-top: 20px; display: inline-block;">Regresar</a>
         </div>
-    </section>
+
+    </div><!-- /.ficha-page -->
+
+    <!-- Lightbox (visor de imágenes) -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Visor de imágenes">
+        <button class="lightbox-close" id="lb-close" aria-label="Cerrar visor">✕</button>
+        <button class="lightbox-prev"  id="lb-prev"  aria-label="Imagen anterior">&#8249;</button>
+        <button class="lightbox-next"  id="lb-next"  aria-label="Imagen siguiente">&#8250;</button>
+        <div class="lightbox-content">
+            <img id="lb-img" src="" alt="">
+        </div>
+        <div class="lightbox-counter" id="lb-counter"></div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -175,75 +114,8 @@
         <p>ventas@amsshocks.com</p>
     </footer>
 
-    <!-- Cargar la base de datos simulada y el script funcional -->
+    <!-- Base de datos de productos y script de la ficha -->
     <script src="js/datos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Obtener el ID del producto desde la URL (ej: ?id=ae92-delanteros)
-            const urlParams = new URLSearchParams(window.location.search);
-            const productoId = urlParams.get('id');
-
-            // 2. Buscar el producto en la base de datos (definida en js/datos.js)
-            const producto = typeof productosDB !== 'undefined' ? productosDB[productoId] : null;
-
-            if (producto) {
-                // 3. Llenar los datos en el HTML
-                document.getElementById('titulo-producto').textContent = producto.nombre;
-                document.getElementById('categoria-producto').textContent = producto.categoria;
-
-                // Llenar galería de imágenes
-                const galeria = document.getElementById('galeria-producto');
-                producto.imagenes.forEach(imgSrc => {
-                    const img = document.createElement('img');
-                    img.src = imgSrc;
-                    img.alt = `Plano y medidas - ${producto.nombre}`;
-                    // Un pequeño truco para que la marca de agua quede opaca pero el amortiguador nítido
-                    // Forzamos el logo como marca de agua en un div contenedor en vez de la etiqueta img misma.
-                    const wrapper = document.createElement('div');
-                    wrapper.style.position = 'relative';
-                    wrapper.style.backgroundColor = '#ffffff';
-                    wrapper.style.borderRadius = '8px';
-                    wrapper.style.border = '1px solid #333';
-                    wrapper.style.display = 'flex';
-                    wrapper.style.justifyContent = 'center';
-                    wrapper.style.alignItems = 'center';
-                    wrapper.style.overflow = 'hidden';
-                    wrapper.style.padding = '10px';
-
-                    // La marca de agua (logo) en el fondo del contenedor
-                    const watermark = document.createElement('img');
-                    watermark.src = 'img/logo.png';
-                    watermark.style.position = 'absolute';
-                    watermark.style.width = '60%';
-                    watermark.style.opacity = '0.15'; // 15% de visibilidad
-                    watermark.style.zIndex = '1';
-                    watermark.style.pointerEvents = 'none';
-
-                    // La imagen real del amortiguador (por encima)
-                    img.style.position = 'relative';
-                    img.style.zIndex = '2';
-                    img.style.backgroundColor = 'transparent';
-                    img.style.border = 'none'; // Quitamos borde a la img porque ya lo tiene el wrapper
-
-                    wrapper.appendChild(watermark);
-                    wrapper.appendChild(img);
-                    galeria.appendChild(wrapper);
-                });
-
-                // Llenar lista de especificaciones
-                const lista = document.getElementById('lista-especificaciones');
-                producto.especificaciones.forEach(espec => {
-                    const li = document.createElement('li');
-                    li.textContent = espec;
-                    lista.appendChild(li);
-                });
-
-            } else {
-                // 4. Si no existe el producto o entraron sin ID, mostrar error
-                document.getElementById('contenido-ficha').style.display = 'none';
-                document.getElementById('error-mensaje').style.display = 'block';
-            }
-        });
-    </script>
+    <script src="js/ficha-tecnica.js"></script>
 </body>
 </html>
