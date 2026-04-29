@@ -73,6 +73,42 @@
         if (e.key === 'ArrowRight') { nextImage(); }
     });
 
+    // ── Badges flotantes — scroll behavior ─────────────────────
+    (function () {
+        var bar = document.getElementById('badges-flotantes');
+        if (!bar) return;
+
+        var SHOW_THRESHOLD = 140; // px scrolled before bar appears
+        var ticking = false;
+        var lastScrollY = window.pageYOffset;
+
+        function update() {
+            var scrollY = window.pageYOffset;
+            var docH    = document.documentElement.scrollHeight;
+            var winH    = window.innerHeight;
+            var nearBottom = (scrollY + winH) >= (docH - 60);
+
+            if (scrollY > SHOW_THRESHOLD && !nearBottom) {
+                bar.classList.add('visible');
+                bar.removeAttribute('aria-hidden');
+            } else {
+                bar.classList.remove('visible');
+                bar.setAttribute('aria-hidden', 'true');
+            }
+            lastScrollY = scrollY;
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                window.requestAnimationFrame(update);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        update(); // run once on load
+    }());
+
     // ── Page / product logic ────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -203,7 +239,7 @@
 
         } else {
             // Product not found — hide product sections, show error message
-            var toHide = ['contenido-ficha', 'sellos-section', 'galeria-section', 'specs-section'];
+            var toHide = ['contenido-ficha', 'badges-flotantes', 'galeria-section', 'specs-section'];
             toHide.forEach(function (id) {
                 var el = document.getElementById(id);
                 if (el) el.style.display = 'none';
